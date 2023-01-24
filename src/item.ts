@@ -18,6 +18,7 @@ export interface KnowledgeItem extends Record {
 
 export interface RenderedKnowledgeItem {
   title: string
+  titleforSort: string
   text: string
   key: string
 }
@@ -32,6 +33,11 @@ export function renderKnowledgeItem(
       linkableTerms,
       RenderMode.Markdown
     )
+    const titleforSort = renderRichTexts(
+      item.title,
+      linkableTerms,
+      RenderMode.Plain
+    )
     const dashDelimitedKey = formatAnchor(item.title, linkableTerms)
 
     let renderedText = renderBlocks(item.blocks, linkableTerms)
@@ -44,6 +50,7 @@ export function renderKnowledgeItem(
     }
     return {
       title: title,
+      titleforSort: titleforSort,
       text: renderedText,
       key: dashDelimitedKey,
     }

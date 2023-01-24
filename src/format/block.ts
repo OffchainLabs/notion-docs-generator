@@ -37,12 +37,15 @@ export function renderBlock(
       postfix += '</ul>\n'
     }
   }
-  const renderRich = (text: RichTextItemResponse[]): string => {
+  const renderRichWithMode = (text: RichTextItemResponse[], mode: RenderMode): string => {
     let child = ''
     if (block.children.length > 0) {
       child = renderBlocks(block.children, linkableTerms)
     }
-    return `${renderRichTexts(text, linkableTerms, RenderMode.HTML)}${child}`
+    return `${renderRichTexts(text, linkableTerms, mode)}${child}`
+  }
+  const renderRich = (text: RichTextItemResponse[]): string => {
+    return renderRichWithMode(text, RenderMode.HTML)
   }
   const body = (() => {
     switch (blockResponse.type) {
@@ -59,7 +62,7 @@ export function renderBlock(
         return `<li>${text}</li>`
       }
       case 'code': {
-        const text = renderRich(blockResponse.code.rich_text)
+        const text = renderRichWithMode(blockResponse.code.rich_text, RenderMode.Markdown)
         return `\`\`\`${blockResponse.code.language}\n${text}\n\`\`\``
       }
       case 'divider': {

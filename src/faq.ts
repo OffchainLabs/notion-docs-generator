@@ -10,7 +10,7 @@ import type { LinkableTerms } from './format'
 const faqDatabaseId = 'a8a9af20f33d4cc1b32bbd2be8459733'
 
 export interface FAQ extends KnowledgeItem {
-  section: string
+  section?: string
   order: number
 }
 
@@ -26,10 +26,10 @@ function parseFAQPage(page: Page): FAQ | undefined {
   if (section.type != 'select') {
     throw new Error('Expected select')
   }
-  if (!section.select) {
-    console.warn(`Ignoring question without section: ${page.page.url}`)
-    return undefined
-  }
+  // if (!section.select) {
+  //   console.warn(`Ignoring question without section: ${page.page.url}`)
+  //   return undefined
+  // }
 
   const order = properties['FAQ order index']
   if (order.type != 'number') {
@@ -42,7 +42,7 @@ function parseFAQPage(page: Page): FAQ | undefined {
 
   return {
     ...item,
-    section: section.select.name,
+    section: section.select?.name,
     order: order.number,
   }
 }
@@ -58,8 +58,8 @@ export async function lookupFAQs(
   return pages.map(parseFAQPage).filter(isFAQ)
 }
 
-function organizeFAQ(questions: FAQ[]): Map<string, FAQ[]> {
-  const sections = new Map<string, FAQ[]>()
+function organizeFAQ(questions: FAQ[]): Map<string | undefined, FAQ[]> {
+  const sections = new Map<string | undefined, FAQ[]>()
   for (const question of questions) {
     if (!sections.has(question.section)) {
       sections.set(question.section, [])
@@ -90,6 +90,13 @@ export function renderFAQs(
 ): string {
   const sections = organizeFAQ(allFAQs)
   if (sections.size > 1) {
+    const undefinedSec = sections.get(undefined)
+    if (undefinedSec) {
+      for (const faq of undefinedSec) {
+        console.warn(`Ignoring question without section: ${faq.url}`)
+      }
+      sections.delete(undefined)
+    }
     let out = ''
     for (const [section, faqs] of sections) {
       out += `## ${section}\n\n${renderSimpleFAQs(faqs, linkableTerms)}`

@@ -39,10 +39,27 @@ function renderRichText(
         }
       }
       if (res.annotations.bold) {
-        text = `<strong>${text}</strong>`
+        switch (renderMode) {
+          case RenderMode.HTML:
+            text = `<strong>${text}</strong>`
+            break
+          case RenderMode.Markdown:
+            text = `**${text}**`
+          case RenderMode.Plain:
+            break
+        }
+        
       }
       if (res.annotations.italic) {
-        text = `<em>${text}</em>`
+        switch (renderMode) {
+          case RenderMode.HTML:
+            text = `<em>${text}</em>`
+            break
+          case RenderMode.Markdown:
+            text = `*${text}*`
+          case RenderMode.Plain:
+            break
+        }
       }
       if (renderMode == RenderMode.HTML) {
         text = text.replaceAll('\n', '<br />\n')

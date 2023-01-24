@@ -38,7 +38,7 @@ export function renderGlossary(
     renderKnowledgeItem(def, linkableTerms)
   )
   // sort the array alphabetically by term
-  renderedDefs.sort((a, b) => a.title.localeCompare(b.title))
+  renderedDefs.sort((a, b) => a.titleforSort.localeCompare(b.titleforSort))
 
   return renderedDefs.map(printItem).join('')
 }
