@@ -1,6 +1,7 @@
 # Other
 .DS_store
 bin
+.npmrc
 
 # Logs
 logs
