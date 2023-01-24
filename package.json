@@ -1,0 +1,30 @@
+{
+  "name": "@offchainlabs/notion-docs-generator",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "license": "Apache-2.0",
+  "private": false,
+  "scripts": {
+    "build": "tsc",
+    "update:all": "ts-node ./scripts/update.ts",
+    "format": "prettier --config .prettierrc.js 'src/**/*.ts' 'scripts/**/*.ts' --write",
+    "lint": "eslint . --ext .ts"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.3",
+    "@types/node": "^18.11.18",
+    "dotenv": "^16.0.3",
+    "typescript": "^4.9.4"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "@typescript-eslint/eslint-plugin-tslint": "^5.48.0",
+    "@typescript-eslint/parser": "^5.48.0",
+    "eslint": "^8.31.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.1",
+    "ts-node": "^10.9.1",
+    "tslint": "^6.1.3"
+  }
+}
