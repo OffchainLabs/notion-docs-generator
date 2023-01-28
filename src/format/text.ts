@@ -10,6 +10,13 @@ function stripCurlyQuotes(input: string): string {
     .replaceAll(/[\u201C\u201D]/g, '"')
 }
 
+export function escapeForJSON(input: string): string {
+  return input
+    .replaceAll("\"", "\\\"")
+    .replaceAll("'", "\'")
+    .replaceAll("\n", "\\n")
+}
+
 function renderRichText(
   res: RichTextItemResponse,
   linkableTerms: LinkableTerms,

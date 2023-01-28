@@ -1,6 +1,6 @@
 import { Client } from '@notionhq/client'
 import { queryDatabaseWithBlocks } from './notion'
-import { parseItemPage, printItem, renderKnowledgeItem } from './item'
+import { parseItemPage, printItem, printItemJSON, renderKnowledgeItem } from './item'
 
 import type { QueryDatabaseParameters } from '@notionhq/client/build/src/api-endpoints'
 import type { Page } from './notion'
@@ -41,4 +41,17 @@ export function renderGlossary(
   renderedDefs.sort((a, b) => a.titleforSort.localeCompare(b.titleforSort))
 
   return renderedDefs.map(printItem).join('')
+}
+
+export function renderGlossaryJSON(
+  definitions: Definition[],
+  linkableTerms: LinkableTerms
+) {
+  const renderedDefs = definitions.map(def =>
+    renderKnowledgeItem(def, linkableTerms)
+  )
+  // sort the array alphabetically by term
+  renderedDefs.sort((a, b) => a.titleforSort.localeCompare(b.titleforSort))
+
+  return '{\n' + renderedDefs.map(printItemJSON).join(',\n') + '\n}'
 }
