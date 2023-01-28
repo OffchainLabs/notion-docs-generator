@@ -34,8 +34,11 @@ export function renderGlossary(
   definitions: Definition[],
   linkableTerms: LinkableTerms
 ) {
-  const renderedDefs = definitions.map(def =>
-    renderKnowledgeItem(def, linkableTerms)
+  const renderedDefs = definitions.map(def => {
+      let item = renderKnowledgeItem(def, linkableTerms)
+      item.key = `glossary-${item.key}`
+      return item
+    }
   )
   // sort the array alphabetically by term
   renderedDefs.sort((a, b) => a.titleforSort.localeCompare(b.titleforSort))
