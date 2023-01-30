@@ -1,6 +1,7 @@
 import { Client, isFullPage } from '@notionhq/client'
 import { RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints'
 import {
+  escapeForJSON,
   LinkableTerms,
   renderRichTexts,
   RenderMode,
@@ -61,6 +62,10 @@ export function renderKnowledgeItem(
 
 export function printItem(item: RenderedKnowledgeItem): string {
   return `### ${item.title} {#${item.key}}\n${item.text}\n\n`
+}
+
+export function printItemJSON(item: RenderedKnowledgeItem): string {
+  return `"${escapeForJSON(item.key)}":{"title":"${escapeForJSON(item.title)}","text":"${escapeForJSON(item.text)}"}`
 }
 
 export class RenderKnowledgeItemError extends Error {
