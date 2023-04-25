@@ -40,7 +40,7 @@ export function renderGlossary(
   // sort the array alphabetically by term
   renderedDefs.sort((a, b) => a.titleforSort.localeCompare(b.titleforSort))
 
-  return renderedDefs.map(printItem).join('')
+  return renderedDefs.map(def => printItem(def, true)).join('')
 }
 
 export function renderGlossaryJSON(

@@ -80,7 +80,7 @@ export function renderSimpleFAQs(
 ): string {
   return faqs
     .map(faq => renderKnowledgeItem(faq, linkableTerms))
-    .map(printItem)
+    .map(faq => printItem(faq))
     .join('')
 }
 

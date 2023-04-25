@@ -2,10 +2,27 @@ import { RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints'
 import { LinkValidity } from './format'
 import type { Block, Page } from './notion'
 
+export type IconItemResponse = {
+  type: "emoji";
+  emoji: string;    // EmojiRequest
+} | {
+  type: "external";
+  external: {
+      url: string;  // TextRequest
+  };
+} | {
+  type: "file";
+  file: {
+      url: string;
+      expiry_time: string;
+  };
+} | null
+
 export interface Record {
   pageId: string
   url: string
   title: RichTextItemResponse[]
+  icon: IconItemResponse
   blocks: Block[]
   status: string | undefined
   publishable: string | undefined
@@ -64,6 +81,7 @@ export function parseRecordPage(
   return {
     pageId: page.page.id,
     title: title.title,
+    icon: page.page.icon,
     status: status.status?.name,
     publishable: publishable.select?.name,
     url: page.page.url,
