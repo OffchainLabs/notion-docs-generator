@@ -20,6 +20,22 @@ export interface Block {
   children: Block[]
 }
 
+export type IconItemResponse = {
+  type: "emoji"
+  emoji: string   // EmojiRequest
+} | {
+  type: "external"
+  external: {
+      url: string // TextRequest
+  }
+} | {
+  type: "file"
+  file: {
+      url: string
+      expiry_time: string
+  }
+} | null
+
 export async function queryDatabase(
   client: Client,
   params: QueryDatabaseParameters

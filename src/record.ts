@@ -1,22 +1,6 @@
 import { RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints'
 import { LinkValidity } from './format'
-import type { Block, Page } from './notion'
-
-export type IconItemResponse = {
-  type: "emoji";
-  emoji: string;    // EmojiRequest
-} | {
-  type: "external";
-  external: {
-      url: string;  // TextRequest
-  };
-} | {
-  type: "file";
-  file: {
-      url: string;
-      expiry_time: string;
-  };
-} | null
+import type { Block, Page, IconItemResponse } from './notion'
 
 export interface Record {
   pageId: string
