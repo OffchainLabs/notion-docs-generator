@@ -1,4 +1,5 @@
 export * from './block'
 export * from './format'
+export * from './icon'
 export * from './link'
 export * from './text'

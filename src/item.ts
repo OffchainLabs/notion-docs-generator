@@ -8,6 +8,7 @@ import {
   formatAnchor,
   renderBlocks,
   MissingPageError,
+  renderIcon
 } from './format'
 import { parseRecordPage } from './record'
 import type { Record } from './record'
@@ -20,6 +21,7 @@ export interface KnowledgeItem extends Record {
 export interface RenderedKnowledgeItem {
   title: string
   titleforSort: string
+  icon: string
   text: string
   key: string
 }
@@ -41,6 +43,8 @@ export function renderKnowledgeItem(
     )
     const dashDelimitedKey = formatAnchor(item.title, linkableTerms)
 
+    const icon = renderIcon(item.icon)
+
     let renderedText = renderBlocks(item.blocks, linkableTerms)
     if (renderedText.length == 0) {
       renderedText = `<p>${renderRichTexts(
@@ -52,6 +56,7 @@ export function renderKnowledgeItem(
     return {
       title: title,
       titleforSort: titleforSort,
+      icon: icon,
       text: renderedText,
       key: dashDelimitedKey,
     }
@@ -60,8 +65,8 @@ export function renderKnowledgeItem(
   }
 }
 
-export function printItem(item: RenderedKnowledgeItem): string {
-  return `### ${item.title} {#${item.key}}\n${item.text}\n\n`
+export function printItem(item: RenderedKnowledgeItem, includeIcon = false): string {
+  return `### ${includeIcon? item.icon : ""}${item.title} {#${item.key}}\n${item.text}\n\n`
 }
 
 export function printItemJSON(item: RenderedKnowledgeItem): string {
