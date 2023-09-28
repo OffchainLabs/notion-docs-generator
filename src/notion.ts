@@ -63,7 +63,7 @@ export async function queryDatabase(
       if (attemptsLeft > 0){
         console.log(`DQ query 502 error: ${attemptsLeft} attempts remaining.`);
         console.log(` Waiting ${options.delaySeconds} seconds and trying again`);
-        await wait(options.delaySeconds);
+        await wait(options.delaySeconds * 1000);
         return queryDatabase(client, params, {...options, attempts: attemptsLeft})
       }
     }
