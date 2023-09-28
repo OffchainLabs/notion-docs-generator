@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "private": false,
   "engines" : { 
-    "node" : ">=15.0.0"
+    "node" : ">=16.0.0"
   },
   "scripts": {
     "build": "tsc",
