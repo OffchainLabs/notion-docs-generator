@@ -1,5 +1,6 @@
 import { Client } from '@notionhq/client'
-import { getPageWithBlocks, queryDatabaseWithBlocks } from './notion'
+import { getPageWithBlocks, queryDatabaseWithBlocks, DBQueryOptions, DBQUERY_DEFAULT_OPTIONS,
+} from './notion'
 import { parseRecordPage } from './record'
 import { printItem, renderKnowledgeItem } from './item'
 import { formatAnchor, renderBlock, renderRichTexts, RenderMode } from './format'
@@ -45,12 +46,13 @@ export async function lookupDocument(client: Client, pageId: string): Promise<Do
 
 export async function lookupDocuments(
   client: Client,
-  query: Omit<QueryDatabaseParameters, 'database_id'>
+  query: Omit<QueryDatabaseParameters, 'database_id'>,
+  options:DBQueryOptions = DBQUERY_DEFAULT_OPTIONS,
 ): Promise<Document[]> {
   const pages = await queryDatabaseWithBlocks(client, {
     database_id: documentDatabaseId,
     ...query,
-  })
+  }, options)
   return pages.map(parseDocumentPage).filter(isDocument)
 }
 
