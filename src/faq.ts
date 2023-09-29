@@ -1,5 +1,5 @@
 import { Client } from '@notionhq/client'
-import { queryDatabaseWithBlocks, DBQueryOptions, DBQUERY_DEFAULT_OPTIONS,
+import { queryDatabaseWithBlocks, APIRequestOptions, API_REQUEST_DEFAULT_OPTIONS,
 } from './notion'
 import { parseItemPage, printItem, renderKnowledgeItem } from './item'
 
@@ -51,7 +51,7 @@ function parseFAQPage(page: Page): FAQ | undefined {
 export async function lookupFAQs(
   client: Client,
   query: Omit<QueryDatabaseParameters, 'database_id'>,
-  options:DBQueryOptions = DBQUERY_DEFAULT_OPTIONS,
+  options:APIRequestOptions = API_REQUEST_DEFAULT_OPTIONS,
 ): Promise<FAQ[]> {
   const pages = await queryDatabaseWithBlocks(client, {
     database_id: faqDatabaseId,

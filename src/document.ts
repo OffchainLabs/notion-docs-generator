@@ -1,9 +1,8 @@
 import { Client } from '@notionhq/client'
-import { getPageWithBlocks, queryDatabaseWithBlocks, DBQueryOptions, DBQUERY_DEFAULT_OPTIONS,
+import { getPageWithBlocks, queryDatabaseWithBlocks, APIRequestOptions, API_REQUEST_DEFAULT_OPTIONS,
 } from './notion'
 import { parseRecordPage } from './record'
-import { printItem, renderKnowledgeItem } from './item'
-import { formatAnchor, renderBlock, renderRichTexts, RenderMode } from './format'
+import { renderBlock, renderRichTexts, RenderMode } from './format'
 
 import type { QueryDatabaseParameters, RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints'
 import type { Block, Page } from './notion'
@@ -47,7 +46,7 @@ export async function lookupDocument(client: Client, pageId: string): Promise<Do
 export async function lookupDocuments(
   client: Client,
   query: Omit<QueryDatabaseParameters, 'database_id'>,
-  options:DBQueryOptions = DBQUERY_DEFAULT_OPTIONS,
+  options:APIRequestOptions = API_REQUEST_DEFAULT_OPTIONS,
 ): Promise<Document[]> {
   const pages = await queryDatabaseWithBlocks(client, {
     database_id: documentDatabaseId,

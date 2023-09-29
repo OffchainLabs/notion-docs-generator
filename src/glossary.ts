@@ -1,5 +1,5 @@
 import { Client } from '@notionhq/client'
-import { queryDatabaseWithBlocks, DBQueryOptions, DBQUERY_DEFAULT_OPTIONS, } from './notion'
+import { queryDatabaseWithBlocks, APIRequestOptions, API_REQUEST_DEFAULT_OPTIONS, } from './notion'
 import { parseItemPage, printItem, printItemJSON, renderKnowledgeItem } from './item'
 
 import type { QueryDatabaseParameters } from '@notionhq/client/build/src/api-endpoints'
@@ -22,7 +22,7 @@ function parseGlossaryPage(page: Page): Definition | undefined {
 export async function lookupGlossaryTerms(
   client: Client,
   query: Omit<QueryDatabaseParameters, 'database_id'>,
-  options:DBQueryOptions = DBQUERY_DEFAULT_OPTIONS,
+  options:APIRequestOptions = API_REQUEST_DEFAULT_OPTIONS,
 ): Promise<Definition[]> {
   const pages = await queryDatabaseWithBlocks(client, {
     database_id: glossaryDatabaseId,
