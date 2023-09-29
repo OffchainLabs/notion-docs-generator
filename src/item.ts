@@ -92,14 +92,19 @@ export async function handleRenderError(
   if (!(wrappedError instanceof MissingPageError)) {
     return false
   }
-  const page = await client.pages.retrieve({ page_id: wrappedError.page })
-  if (!isFullPage(page)) {
-    console.error(`Failed due to missing page ${page.id} which is unaccessable`)
-  } else {
-    console.error(
-      `Failed due to missing page ${page.id} at url ${page.url} being unaccessable`
-    )
+  try {
+    const page = await client.pages.retrieve({ page_id: wrappedError.page })
+    if (!isFullPage(page)) {
+      console.error(`Failed due to missing page ${page.id} which is inaccessible`)
+    } else {
+      console.error(
+        `Failed due to missing page ${page.id} at url ${page.url} being inaccessible`
+      )
+    }
+  } catch(e){
+    console.error(`Failed to retrieve page for error info:`, e)
   }
+
   return true
 }
 
