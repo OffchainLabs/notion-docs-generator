@@ -23,10 +23,10 @@ export function renderBlock(
       prefix = '</ul>\n'
     }
     if (blockResponse.type == 'numbered_list_item') {
-      prefix += '<ol>'
+      prefix += '<ol>\n'
     }
     if (blockResponse.type == 'bulleted_list_item') {
-      prefix += '<ul>'
+      prefix += '<ul>\n'
     }
   }
   if (last) {

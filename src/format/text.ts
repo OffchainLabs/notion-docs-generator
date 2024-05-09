@@ -69,7 +69,7 @@ function renderRichText(
         }
       }
       if (renderMode == RenderMode.HTML) {
-        text = text.replaceAll('\n', '<br />\n')
+        text = text.replaceAll('\n', '\n<br />')
       }
       return text
     }
