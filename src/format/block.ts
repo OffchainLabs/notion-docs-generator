@@ -23,10 +23,10 @@ export function renderBlock(
       prefix = '</ul>\n'
     }
     if (blockResponse.type == 'numbered_list_item') {
-      prefix += '<ol>'
+      prefix += '<ol>\n'
     }
     if (blockResponse.type == 'bulleted_list_item') {
-      prefix += '<ul>'
+      prefix += '<ul>\n'
     }
   }
   if (last) {
@@ -51,7 +51,7 @@ export function renderBlock(
     switch (blockResponse.type) {
       case 'paragraph': {
         const text = renderRich(blockResponse.paragraph.rich_text)
-        return `<p>${text}</p>\n`
+        return `<p>\n${text}\n</p>\n`
       }
       case 'numbered_list_item': {
         const text = renderRich(blockResponse.numbered_list_item.rich_text)
