@@ -47,11 +47,11 @@ export function renderKnowledgeItem(
 
     let renderedText = renderBlocks(item.blocks, linkableTerms)
     if (renderedText.length == 0) {
-      renderedText = `<p>${renderRichTexts(
+      renderedText = `<p>\n${renderRichTexts(
         item.text,
         linkableTerms,
         RenderMode.HTML
-      )}</p>`
+      )}\n</p>`
     }
     return {
       title: title,
