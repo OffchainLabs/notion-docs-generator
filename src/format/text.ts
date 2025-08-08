@@ -52,6 +52,7 @@ function renderRichText(
             break
           case RenderMode.Markdown:
             text = `**${text}**`
+            break
           case RenderMode.Plain:
             break
         }
@@ -64,6 +65,7 @@ function renderRichText(
             break
           case RenderMode.Markdown:
             text = `*${text}*`
+            break
           case RenderMode.Plain:
             break
         }

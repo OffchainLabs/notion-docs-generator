@@ -57,27 +57,47 @@ export async function lookupDocuments(
 
 function renderDocBlocks(
   blocks: Block[],
-  linkableTerms: LinkableTerms
+  linkableTerms: LinkableTerms,
+  renderMode: RenderMode
 ): string {
   let out = ''
   let prevType: string | undefined
   let i = 0
+  let listIndex = 1
+  
   for (const block of blocks) {
+    // Reset list index when transitioning between list types
+    if (prevType !== block.block.type && block.block.type === 'numbered_list_item') {
+      listIndex = 1
+    }
+    
     const renderedBlock = renderBlock(
       block,
       linkableTerms,
+      renderMode,
       prevType,
-      i == blocks.length - 1
+      i == blocks.length - 1,
+      listIndex
     )
     out += renderedBlock
-    out += '\n'
+    
+    // Don't add extra newline in Markdown mode as blocks handle their own spacing
+    if (renderMode !== RenderMode.Markdown) {
+      out += '\n'
+    }
+    
+    // Increment list index for numbered lists
+    if (block.block.type === 'numbered_list_item') {
+      listIndex++
+    }
+    
     prevType = block.block.type
     i++
   }
   return out
 }
 
-export function renderDocument(doc: Document, linkableTerms: LinkableTerms): string {
+export function renderDocument(doc: Document, linkableTerms: LinkableTerms, renderMode: RenderMode): string {
 	let out = ''
   let prevType: string | undefined
   let i = 0
@@ -107,8 +127,10 @@ export function renderDocument(doc: Document, linkableTerms: LinkableTerms): str
     const renderedBlock = renderBlock(
       block,
       linkableTerms,
+      renderMode,
       prevType,
-      i == doc.blocks.length - 1
+      i == doc.blocks.length - 1,
+      1  // list index not tracked in document rendering
     )
     out += renderedBlock
     out += '\n'
