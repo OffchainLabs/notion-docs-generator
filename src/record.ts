@@ -65,7 +65,7 @@ export function parseRecordPage(
   return {
     pageId: page.page.id,
     title: title.title,
-    icon: page.page.icon,
+    icon: page.page.icon as any,
     status: status.status?.name,
     publishable: publishable.select?.name,
     url: page.page.url,
