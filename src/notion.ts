@@ -23,21 +23,6 @@ export interface Block {
   children: Block[]
 }
 
-export type IconItemResponse = {
-  type: "emoji"
-  emoji: string   // EmojiRequest
-} | {
-  type: "external"
-  external: {
-      url: string // TextRequest
-  }
-} | {
-  type: "file"
-  file: {
-      url: string
-      expiry_time: string
-  }
-} | null
 
 export const API_REQUEST_DEFAULT_OPTIONS = {
   attempts: 3,

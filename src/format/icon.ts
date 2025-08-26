@@ -1,10 +1,10 @@
-import { IconItemResponse } from "../notion"
+import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints"
 
 // List of blacklisted emojis (the ones we don't want to render anywhere)
 const blacklistedEmojis = ["🧱"]
 
 export function renderIcon(
-    icon: IconItemResponse
+    icon: PageObjectResponse['icon']
 ): string {
     // Item is valid, but doesn't have an icon set
     if (!icon) {

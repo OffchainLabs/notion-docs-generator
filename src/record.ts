@@ -1,12 +1,12 @@
-import { RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints'
+import { RichTextItemResponse, PageObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 import { LinkValidity } from './format'
-import type { Block, Page, IconItemResponse } from './notion'
+import type { Block, Page } from './notion'
 
 export interface Record {
   pageId: string
   url: string
   title: RichTextItemResponse[]
-  icon: IconItemResponse
+  icon: PageObjectResponse['icon']
   blocks: Block[]
   status: string | undefined
   publishable: string | undefined
@@ -65,7 +65,7 @@ export function parseRecordPage(
   return {
     pageId: page.page.id,
     title: title.title,
-    icon: page.page.icon as any,
+    icon: page.page.icon,
     status: status.status?.name,
     publishable: publishable.select?.name,
     url: page.page.url,
