@@ -1,6 +1,6 @@
 {
   "name": "@offchainlabs/notion-docs-generator",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "main": "bin/index.js",
   "types": "bin/index.d.ts",
   "license": "Apache-2.0",

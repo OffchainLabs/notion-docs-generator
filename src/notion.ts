@@ -23,21 +23,6 @@ export interface Block {
   children: Block[]
 }
 
-export type IconItemResponse = {
-  type: "emoji"
-  emoji: string   // EmojiRequest
-} | {
-  type: "external"
-  external: {
-      url: string // TextRequest
-  }
-} | {
-  type: "file"
-  file: {
-      url: string
-      expiry_time: string
-  }
-} | null
 
 export const API_REQUEST_DEFAULT_OPTIONS = {
   attempts: 3,
@@ -58,7 +43,11 @@ export async function queryDatabase(
 ): Promise<PageObjectResponse[]> {
   let pages: (PageObjectResponse | PartialPageObjectResponse)[]
   try {
-    pages = await collectPaginatedAPI(client.databases.query, params)
+    const results = await collectPaginatedAPI(client.databases.query, params)
+    // Filter to only include page objects, excluding database objects
+    pages = results.filter((item): item is PageObjectResponse | PartialPageObjectResponse => 
+      item.object === 'page'
+    )
   } catch(err:any){
     if (err.status == 502 || err.status == 500){
       const attemptsLeft = options.attempts - 1;

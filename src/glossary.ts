@@ -5,7 +5,7 @@ import { parseItemPage, printItem, printItemJSON, renderKnowledgeItem } from './
 import type { QueryDatabaseParameters } from '@notionhq/client/build/src/api-endpoints'
 import type { Page } from './notion'
 import type { KnowledgeItem } from './item'
-import type { LinkableTerms } from './format'
+import type { LinkableTerms, RenderMode } from './format'
 
 const glossaryDatabaseId = '3bad2594574f476f917d8080a6ec5ce7'
 
@@ -33,10 +33,11 @@ export async function lookupGlossaryTerms(
 
 export function renderGlossary(
   definitions: Definition[],
-  linkableTerms: LinkableTerms
+  linkableTerms: LinkableTerms,
+  renderMode: RenderMode
 ) {
   const renderedDefs = definitions.map(def =>
-    renderKnowledgeItem(def, linkableTerms)
+    renderKnowledgeItem(def, linkableTerms, renderMode)
   )
   // sort the array alphabetically by term
   renderedDefs.sort((a, b) => a.titleforSort.localeCompare(b.titleforSort))
@@ -46,10 +47,11 @@ export function renderGlossary(
 
 export function renderGlossaryJSON(
   definitions: Definition[],
-  linkableTerms: LinkableTerms
+  linkableTerms: LinkableTerms,
+  renderMode: RenderMode
 ) {
   const renderedDefs = definitions.map(def =>
-    renderKnowledgeItem(def, linkableTerms)
+    renderKnowledgeItem(def, linkableTerms, renderMode)
   )
   // sort the array alphabetically by term
   renderedDefs.sort((a, b) => a.titleforSort.localeCompare(b.titleforSort))

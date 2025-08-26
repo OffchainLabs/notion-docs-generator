@@ -1,12 +1,12 @@
-import { RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints'
+import { RichTextItemResponse, PageObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 import { LinkValidity } from './format'
-import type { Block, Page, IconItemResponse } from './notion'
+import type { Block, Page } from './notion'
 
 export interface Record {
   pageId: string
   url: string
   title: RichTextItemResponse[]
-  icon: IconItemResponse
+  icon: PageObjectResponse['icon']
   blocks: Block[]
   status: string | undefined
   publishable: string | undefined

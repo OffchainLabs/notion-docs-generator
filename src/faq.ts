@@ -6,7 +6,7 @@ import { parseItemPage, printItem, renderKnowledgeItem } from './item'
 import type { QueryDatabaseParameters } from '@notionhq/client/build/src/api-endpoints'
 import type { Page } from './notion'
 import type { KnowledgeItem } from './item'
-import type { LinkableTerms } from './format'
+import type { LinkableTerms, RenderMode } from './format'
 
 const faqDatabaseId = 'a8a9af20f33d4cc1b32bbd2be8459733'
 
@@ -78,17 +78,19 @@ function organizeFAQ(questions: FAQ[]): Map<string | undefined, FAQ[]> {
 
 export function renderSimpleFAQs(
   faqs: FAQ[],
-  linkableTerms: LinkableTerms
+  linkableTerms: LinkableTerms,
+  renderMode: RenderMode
 ): string {
   return faqs
-    .map(faq => renderKnowledgeItem(faq, linkableTerms))
+    .map(faq => renderKnowledgeItem(faq, linkableTerms, renderMode))
     .map(faq => printItem(faq))
     .join('')
 }
 
 export function renderFAQs(
   allFAQs: FAQ[],
-  linkableTerms: LinkableTerms
+  linkableTerms: LinkableTerms,
+  renderMode: RenderMode
 ): string {
   const sections = organizeFAQ(allFAQs)
   if (sections.size > 1) {
@@ -101,10 +103,10 @@ export function renderFAQs(
     }
     let out = ''
     for (const [section, faqs] of sections) {
-      out += `## ${section}\n\n${renderSimpleFAQs(faqs, linkableTerms)}`
+      out += `## ${section}\n\n${renderSimpleFAQs(faqs, linkableTerms, renderMode)}`
     }
     return out
   } else {
-    return renderSimpleFAQs(allFAQs, linkableTerms)
+    return renderSimpleFAQs(allFAQs, linkableTerms, renderMode)
   }
 }
