@@ -52,6 +52,7 @@ function renderRichText(
             break
           case RenderMode.Markdown:
             text = `**${text}**`
+            break
           case RenderMode.Plain:
             break
         }
@@ -64,12 +65,13 @@ function renderRichText(
             break
           case RenderMode.Markdown:
             text = `*${text}*`
+            break
           case RenderMode.Plain:
             break
         }
       }
       if (renderMode == RenderMode.HTML) {
-        text = text.replaceAll('\n', '<br />\n')
+        text = text.replaceAll('\n', '\n<br />\n')
       }
       return text
     }

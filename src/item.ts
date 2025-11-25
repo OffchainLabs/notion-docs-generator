@@ -28,13 +28,14 @@ export interface RenderedKnowledgeItem {
 
 export function renderKnowledgeItem(
   item: KnowledgeItem,
-  linkableTerms: LinkableTerms
+  linkableTerms: LinkableTerms,
+  renderMode: RenderMode
 ): RenderedKnowledgeItem {
   try {
     const title = renderRichTexts(
       item.title,
       linkableTerms,
-      RenderMode.Markdown
+      RenderMode.Plain
     )
     const titleforSort = renderRichTexts(
       item.title,
@@ -45,13 +46,21 @@ export function renderKnowledgeItem(
 
     const icon = renderIcon(item.icon)
 
-    let renderedText = renderBlocks(item.blocks, linkableTerms)
+    let renderedText = renderBlocks(item.blocks, linkableTerms, renderMode)
     if (renderedText.length == 0) {
-      renderedText = `<p>${renderRichTexts(
+      // Render using the specified mode
+      const textContent = renderRichTexts(
         item.text,
         linkableTerms,
-        RenderMode.HTML
-      )}</p>`
+        renderMode
+      )
+      
+      // Wrap in appropriate tags based on render mode
+      if (renderMode === RenderMode.HTML) {
+        renderedText = `<p>\n${textContent}\n</p>`
+      } else {
+        renderedText = textContent
+      }
     }
     return {
       title: title,

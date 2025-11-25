@@ -62,7 +62,7 @@ export function renderPageLink(
   if (!link) {
     throw new MissingPageError(page)
   }
-  const text = renderRichTexts(link.text, linkableTerms, RenderMode.HTML)
+  const text = renderRichTexts(link.text, linkableTerms, RenderMode.Plain)
   if (link.valid != 'Valid') {
     console.warn(
       `Ignoring link to doc with reason: ${link.valid.reason} - ${link.notionURL}`
