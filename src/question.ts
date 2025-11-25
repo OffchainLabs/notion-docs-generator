@@ -9,6 +9,9 @@ import {
 import { RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints'
 import type { QueryDatabaseParameters } from '@notionhq/client/build/src/api-endpoints'
 
+const questionDatabaseId = '2a701a3f59f880db8ebdc93e0dba5ce8'
+const questionTypeDatabaseId = '2a701a3f59f880278472c9c288d64833'
+
 export interface Question {
   id: string
   question: RichTextItemResponse[]
@@ -84,10 +87,6 @@ function parseQuestionTypePage(
     category: categoryName,
   }
 }
-
-
-const questionDatabaseId = '2a701a3f59f880db8ebdc93e0dba5ce8'
-const questionTypeDatabaseId = '2a701a3f59f880278472c9c288d64833'
 
 async function getQuestionTypesMap(
   client: Client,
