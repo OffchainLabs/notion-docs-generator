@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "prepare": "tsc",
     "update:all": "ts-node ./scripts/update.ts",
     "format": "prettier --config .prettierrc.js 'src/**/*.ts' 'scripts/**/*.ts' --write",
     "lint": "eslint . --ext .ts",

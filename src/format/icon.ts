@@ -19,11 +19,14 @@ export function renderIcon(
             }
             console.log(`Emoji ${icon.emoji} is not supported (blacklisted) and won't render`)
             return ""
-        
+
         // This is a valid icon, but we are not handling these types yet
         case "external":
         case "file":
             console.log(`Icon type ${icon.type} is not supported and won't render`)
+            return ""
+
+        default:
             return ""
     }
 }
