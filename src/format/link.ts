@@ -37,17 +37,32 @@ export class MissingPageError extends Error {
   }
 }
 
+// Notion internal URLs use notion.so with doc-like paths.
+// Convert them to relative paths for the docs site.
+function rewriteNotionUrl(url: string): string {
+  const notionPrefix = 'https://www.notion.so/'
+  if (url.startsWith(notionPrefix)) {
+    let path = url.slice(notionPrefix.length)
+    // Strip .mdx/.md extension — Docusaurus routes don't use them
+    path = path.replace(/\.mdx?$/, '')
+    console.warn(`Rewriting Notion URL to relative path: ${url} -> /${path}`)
+    return `/${path}`
+  }
+  return url
+}
+
 export function renderLink(
   text: string,
   url: string,
   anchor: string,
   renderMode: RenderMode
 ): string {
+  const resolvedUrl = rewriteNotionUrl(url)
   switch (renderMode) {
     case RenderMode.HTML:
-      return `<a href="${url}${anchor}">${text}</a>`
+      return `<a href="${resolvedUrl}${anchor}">${text}</a>`
     case RenderMode.Markdown:
-      return `[${text}](${url}${anchor})`
+      return `[${text}](${resolvedUrl}${anchor})`
     case RenderMode.Plain:
       return text
   }

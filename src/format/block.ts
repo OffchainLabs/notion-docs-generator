@@ -6,6 +6,19 @@ import type { RichTextItemResponse } from '@notionhq/client/build/src/api-endpoi
 import type { Block } from '../notion'
 import type { LinkableTerms } from './link'
 
+// Notion uses human-readable language names that may not match Prism/Docusaurus identifiers
+const LANGUAGE_MAP: Record<string, string> = {
+  'plain text': 'text',
+  'c++': 'cpp',
+  'c#': 'csharp',
+  'objective-c': 'objectivec',
+  'visual basic': 'vb',
+}
+
+function normalizeCodeLanguage(language: string): string {
+  return LANGUAGE_MAP[language] ?? language
+}
+
 export function renderBlock(
   block: Block,
   linkableTerms: LinkableTerms,
@@ -82,12 +95,13 @@ export function renderBlock(
       }
       case 'code': {
         const text = renderRichWithMode(blockResponse.code.rich_text, RenderMode.Plain)
+        const lang = normalizeCodeLanguage(blockResponse.code.language)
         if (renderMode === RenderMode.Markdown) {
-          return `\`\`\`${blockResponse.code.language}\n${text}\n\`\`\`\n`
+          return `\`\`\`${lang}\n${text}\n\`\`\`\n`
         } else if (renderMode === RenderMode.Plain) {
           return `${text}\n`
         }
-        return `<pre><code class="language-${blockResponse.code.language}">${text}</code></pre>\n`
+        return `<pre><code class="language-${lang}">${text}</code></pre>\n`
       }
       case 'divider': {
         if (renderMode === RenderMode.Markdown) {
