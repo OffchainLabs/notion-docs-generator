@@ -26,9 +26,8 @@ function renderRichText(
   switch (res.type) {
     case 'text': {
       let text = stripCurlyQuotes(res.text.content)
-      if (res.text.link) {
-        text = renderLink(text, res.text.link.url, '', renderMode)
-      }
+      // Apply inline annotations before link wrapping so that in markdown
+      // the link is outermost: [`code`](url) instead of `[code](url)`
       if (res.annotations.code) {
         switch (renderMode) {
           case RenderMode.HTML:
@@ -56,7 +55,6 @@ function renderRichText(
           case RenderMode.Plain:
             break
         }
-        
       }
       if (res.annotations.italic) {
         switch (renderMode) {
@@ -69,6 +67,9 @@ function renderRichText(
           case RenderMode.Plain:
             break
         }
+      }
+      if (res.text.link) {
+        text = renderLink(text, res.text.link.url, '', renderMode)
       }
       if (renderMode == RenderMode.HTML) {
         text = text.replaceAll('\n', '\n<br />\n')
